@@ -1,0 +1,13 @@
+server:
+  port: 8888
+
+spring:
+  profiles:
+    active: native  # Les configurations seront stockées localement dans le chemin indiqué.
+  application:
+    name: config-server
+  cloud:
+    config:
+      server:
+        native:
+          search-locations: classpath:/configurations  # Chemin relatif où les fichiers de configuration sont situés
