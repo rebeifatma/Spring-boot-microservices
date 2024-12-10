@@ -6,6 +6,7 @@ import com.fatma.order.customer.CustomerClient;
 import com.fatma.order.exception.BusinessException;
 import com.fatma.order.orderLine.OrderLineRequest;
 import com.fatma.order.orderLine.OrderLineService;
+import com.fatma.order.payment.PaymentClient;
 import com.fatma.order.payment.PaymentRequest;
 import com.fatma.order.product.ProductClient;
 import com.fatma.order.product.PurchaseRequest;
@@ -27,7 +28,7 @@ public class OrderService {
     private final ProductClient productClient;
     private final OrderLineService orderLineService;
     private  final OrderProducer orderProducer;
-    private final PaymentClient paymentClient;
+    private PaymentClient paymentClient;
 
 
 
