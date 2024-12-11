@@ -2,8 +2,8 @@ eureka:
   instance:
     hostname: localhost
   client:
-    registerWithEureka: false
-    fetchRegistry: false
+    registerWithEureka: false  #etre enregister  par autre   eurka
+    fetchRegistry: false   # doit telcharger le  enregistrement d'autre eurka server non
     serviceUrl:
       defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
 
