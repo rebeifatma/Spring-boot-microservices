@@ -12,13 +12,17 @@ spring:
   kafka:
     consumer:
       bootstrap-servers: localhost:9092
-      group-id: paymentGroup,orderGroup
+      group-id: notificationGroup
       auto-offset-reset: earliest
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
       properties:
         spring.json.trusted.packages: '*'
-        spring.json.type.mapping: orderConfirmation:orderConfirmation:com.fatma.order.Kafka.OrderConfirmation,paymentConfirmation:com.fatma.payment.notification.PaymentNotificationRequest
+        spring.json.type.mapping:
+          orderConfirmation:com.fatma.order.Kafka.OrderConfirmation,
+          paymentConfirmation:com.fatma.payment.notification.PaymentNotificationRequest
+    listener:
+      missing-topics-fatal: false
   mail:
     host: localhost
     port: 1025

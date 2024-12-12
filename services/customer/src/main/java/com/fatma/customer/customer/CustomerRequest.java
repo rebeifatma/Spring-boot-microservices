@@ -9,7 +9,7 @@ import jakarta.validation.constraints.Size;
 public record CustomerRequest(
 
         @NotNull(message = "Customer ID is required")
-        @Pattern(regexp = "\\d+", message = "Customer ID must be numeric") // Exemple : Validation pour un ID numérique
+        @Pattern(regexp = "\\d+", message = "Customer ID must be numeric")
         String id,
 
         @NotNull(message = "Customer first name is required")

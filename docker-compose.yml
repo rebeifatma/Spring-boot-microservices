@@ -69,6 +69,20 @@ services:
       - "22181:2181"
     networks:
       - microservices-net
+
+  keycloak:
+    container_name: keycloak-ms
+    image: quay.io/keycloak/keycloak:24.0.2
+    ports:
+      - 9099:8080
+    environment:
+      KEYCLOAK_ADMIN: fatmaRebai
+      KEYCLOAK_ADMIN_PASSWORD: fatmaRebai
+    networks:
+      - microservices-net
+    command:
+      - "start-dev"
+
   kafka:
     image: confluentinc/cp-kafka:latest
     container_name: ms_kafka

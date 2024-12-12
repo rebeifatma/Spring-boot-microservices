@@ -5,6 +5,8 @@ import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
@@ -17,18 +19,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
 import static com.fatma.notification.email.EmailTemplates.ORDER_CONFIRMATION;
 import static com.fatma.notification.email.EmailTemplates.PAYMENT_CONFIRMATION;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 @Service
-@Slf4j
 @RequiredArgsConstructor
 public class EmailService {
 
-    private final JavaMailSender mailSender;
-    private final SpringTemplateEngine templateEngine;
+    private JavaMailSender mailSender;
+    private  SpringTemplateEngine templateEngine;
+    private static final Logger log = LoggerFactory.getLogger(EmailService.class);
 
     @Async
     public void sendPaymentSuccessEmail(
@@ -40,7 +41,7 @@ public class EmailService {
 
         MimeMessage mimeMessage = mailSender.createMimeMessage();
         MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage, MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED, UTF_8.name());
-        messageHelper.setFrom("contact@aliboucoding.com");
+        messageHelper.setFrom("fatma@gmail.com");
 
         final String templateName = PAYMENT_CONFIRMATION.getTemplate();
 
@@ -61,9 +62,8 @@ public class EmailService {
             mailSender.send(mimeMessage);
             log.info(String.format("INFO - Email successfully sent to %s with template %s ", destinationEmail, templateName));
         } catch (MessagingException e) {
-            log.warn("WARNING - Cannot send Email to {} ", destinationEmail);
+            log.warn("WARNING - Cannot send Email to {} ", destinationEmail, e);
         }
-
     }
 
     @Async
@@ -99,8 +99,7 @@ public class EmailService {
             mailSender.send(mimeMessage);
             log.info(String.format("INFO - Email successfully sent to %s with template %s ", destinationEmail, templateName));
         } catch (MessagingException e) {
-            log.warn("WARNING - Cannot send Email to {} ", destinationEmail);
+            log.warn("WARNING - Cannot send Email to {} ", destinationEmail, e);
         }
-
     }
 }

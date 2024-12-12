@@ -30,7 +30,7 @@ public class ProductService {
                 .map(ProductPurchaseRequest::productId)
                 .toList();
         var storedProducts = productRepository.findAllByIdInOrderById(productIds);
-        if (productIds.size() != storedProducts.size()) {
+        if (productIds.size() != storedProducts.size()) {  //si tous les produits existe ou non
             throw new ProductPurchaseException("One or more products does not exist");
         }
         var sortedRequest = request
@@ -38,12 +38,13 @@ public class ProductService {
                 .sorted(Comparator.comparing(ProductPurchaseRequest::productId))
                 .toList();
         var purchasedProducts = new ArrayList<ProductPurchaseResponse>();
-        for (int i = 0; i < storedProducts.size(); i++) {
+        for (int i = 0; i < storedProducts.size(); i++) {  //le stock suffi ou  non
             Product product = storedProducts.get(i);
             var productRequest = sortedRequest.get(i);
             if (product.getAvailableQuantity() < productRequest.quantity()) {
                 throw new ProductPurchaseException("Insufficient stock quantity for product with ID:: " + productRequest.productId());
             }
+            // mise a jour le stock
             var newAvailableQuantity = product.getAvailableQuantity() - productRequest.quantity();
             product.setAvailableQuantity(newAvailableQuantity);
             productRepository.save(product);

@@ -9,18 +9,18 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class OrderLineService {
-    private final OrderLineRepository produtRepository;
-    private final OrderLineMapper productMapper;
+    private final OrderLineRepository orderLineRepository;
+    private final OrderLineMapper orderLineMapper;
 
     public Integer saveOrderLine(OrderLineRequest request) {
-        var order = productMapper.toOrderLine(request);
-        return produtRepository.save(order).getId();
+        var order = orderLineMapper.toOrderLine(request);
+        return orderLineRepository.save(order).getId();
     }
 
     public List<OrderLineResponse> findAllByOrderId(Integer orderId) {
-        return produtRepository.findAllByOrderId(orderId)
+        return orderLineRepository.findAllByOrderId(orderId)
                 .stream()
-                .map(productMapper::toOrderLineResponse)
+                .map(orderLineMapper::toOrderLineResponse)
                 .collect(Collectors.toList());
     }
 }
